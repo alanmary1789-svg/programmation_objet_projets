@@ -1,4 +1,4 @@
-#include "Point.h"
+#include "point.h"
 #include <iostream>
 #include <cmath> // Pour la fonction sqrt()
 
