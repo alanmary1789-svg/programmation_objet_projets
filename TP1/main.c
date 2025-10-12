@@ -229,9 +229,7 @@ void LibererMatrice(Matrice mat, int lignes) {
     free(mat);
 }
 
-
 //Programme principale 
-
 
 int main() {
 
