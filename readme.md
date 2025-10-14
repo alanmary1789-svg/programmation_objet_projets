@@ -1,25 +1,25 @@
-# 🧠 Project Name
+#  Project Name
 
 A brief and clear description of what your C/C++ project does.  
 (Example: *A lightweight multithreaded file compression tool written in C and C++.*)
 
 ---
 
-## 🚀 Features
-- ⚙️ Implemented in **C/C++**
-- 🧵 Multithreading support (if applicable)
-- 🗃️ Efficient memory management
-- 🧩 Modular and portable architecture
-- 🧪 Unit tests included (if applicable)
+## Features
+-  Implemented in **C/C++**
+-  Multithreading support (if applicable)
+-  Efficient memory management
+-  Modular and portable architecture
+-  Unit tests included (if applicable)
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 
 Before building, make sure you have:
 
