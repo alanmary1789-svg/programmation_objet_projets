@@ -1,4 +1,5 @@
-#include "Point.h"
+#include "point.h"
+#include "vector.h"
 #include <iostream>
 
 int main() {
