@@ -1,0 +1,290 @@
+---
+title: Projet C++ - Diagramme UML
+---
+classDiagram
+    direction TB
+
+    %% ═══════════════════════════════════════════════════════════
+    %% LÉGENDE DES RELATIONS
+    %% ═══════════════════════════════════════════════════════════
+    %% <|--  Héritage (flèche triangulaire pleine)
+    %% *--   Composition (losange plein)
+    %% o--   Agrégation (losange vide)
+    %% -->   Association (flèche simple)
+    %% ..>   Dépendance/Utilisation (flèche pointillée)
+    %% ═══════════════════════════════════════════════════════════
+
+    %% ═══════════════════════════════════════════════════════════
+    %% ÉNUMÉRATIONS
+    %% ═══════════════════════════════════════════════════════════
+    class Etat {
+        <<enumeration>>
+        libre = 0
+        emprunte = 1
+        prete = 2
+    }
+
+    class Public {
+        <<enumeration>>
+        ados = 0
+        jeunesse = 1
+        tout_public = 2
+        adulte = 3
+    }
+
+    class Genre {
+        <<enumeration>>
+        defaut = -1
+        litterature = 0
+        noir = 1
+        animalier = 2
+        amour = 3
+        moeurs = 4
+        gothique = 5
+        courtois = 6
+        epistolaire = 7
+        feuilleton = 8
+        graphique = 9
+        historique = 10
+        photo = 11
+        picaresque = 12
+        memoire = 13
+        populaire = 14
+        aventure = 15
+        anticipation = 16
+        espionnage = 17
+        apprentissage = 18
+        chevalerie = 19
+        autobiographique = 20
+        nouveau_roman = 21
+        chevaleresque = 22
+        conte = 23
+        nouvelle = 24
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSES TEMPLATES
+    %% ═══════════════════════════════════════════════════════════
+    class Noeud~T~ {
+        -T info
+        -Noeud~T~* suivant
+        +Noeud()
+        +Noeud(T valeur)
+        +Noeud(const Noeud~T~& noeud)
+        +~Noeud()
+        +operator=(const Noeud~T~& noeud) Noeud~T~&
+        +getInfo() T
+        +getSuivant() Noeud~T~*
+        +setInfo(T inf) void
+        +setSuivant(Noeud~T~* next) void
+    }
+
+    class Liste~T~ {
+        -Noeud~T~* tete
+        -int taille
+        +Liste()
+        +Liste(const Liste~T~& l)
+        +~Liste()
+        +operator=(const Liste~T~& l) Liste~T~&
+        +operator+(const Liste~T~& l) Liste~T~
+        +getTete() Noeud~T~*
+        +getTaille() int
+        +setTete(Noeud~T~* t) void
+        +setTaille(int n) void
+        +insererDebut(T valeur) void
+        +insererFin(T valeur) void
+        +inserer(T valeur, int i) void
+        +supprimerDebut() bool
+        +supprimerFin() bool
+        +supprimer(T valeur) bool
+        +vider() void
+        +rechercher(T val) Noeud~T~*
+        +getElement(int i) T
+        +contient(T val) bool
+        +afficher() void
+        +copierListe(const Liste~T~& l) void
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSE DE BASE LIVRE
+    %% ═══════════════════════════════════════════════════════════
+    class Livre {
+        -string code
+        -string auteur
+        -string titre
+        -string editeur
+        -string isbn
+        -Etat etat
+        -Public audience
+        -Biblio* proprietaire
+        +Livre(...)
+        +Livre(const Livre& livre)
+        +getCode() string
+        +getAuteur() string
+        +getTitre() string
+        +getEditeur() string
+        +getIsbn() string
+        +getEtat() Etat
+        +getPublic() Public
+        +getProprio() Biblio*
+        +setCode(string c) void
+        +setAuteur(string a) void
+        +setTitre(string t) void
+        +setEditeur(string e) void
+        +setIsbn(string is) void
+        +setEtat(Etat et) void
+        +setPublic(Public pub) void
+        +setProprio(Biblio* biblio) void
+        +afficher() void
+        +emprunter() bool
+        +rendre() bool
+        +estdispo_emprunt(Biblio* biblio) bool
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSES DÉRIVÉES DE LIVRE
+    %% ═══════════════════════════════════════════════════════════
+    class BD {
+        -string dessinateur
+        +BD(...)
+        +BD(const BD& bd)
+        +afficher() void
+        +getDessinateur() string
+        +setDessinateur(string dess) void
+    }
+
+    class Roman {
+        -Genre genre
+        +Roman(...)
+        +Roman(const Roman& roman)
+        +getGenre() Genre
+        +setGenre(Genre g) void
+        +afficher() void
+    }
+
+    class Theatre {
+        -int siecle
+        +Theatre(...)
+        +Theatre(const Theatre& theatre)
+        +getSiecle() int
+        +setSiecle(int s) void
+        +afficher() void
+    }
+
+    class Recueil {
+        -bool vers
+        -bool prose
+        +Recueil(...)
+        +Recueil(const Recueil& recueil)
+        +getVers() bool
+        +getProse() bool
+        +setVers(bool v) void
+        +setProse(bool pr) void
+        +afficher() void
+    }
+
+    class Album {
+        -bool dessin
+        -bool photo
+        +Album(...)
+        +Album(const Album& album)
+        +getDessin() bool
+        +getPhoto() bool
+        +setDessin(bool des) void
+        +setPhoto(bool ph) void
+        +afficher() void
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSES BIBLIO ET ADHERENT
+    %% ═══════════════════════════════════════════════════════════
+    class Biblio {
+        -string nom
+        -string adresse
+        -string code
+        -Liste~Livre*~ liste
+        +Biblio(string n, string a, string c)
+        +~Biblio()
+        +getNom() string
+        +getAdresse() string
+        +getCode() string
+        +getListe() Liste~Livre*~
+        +setNom(string n) void
+        +setAdresse(string a) void
+        +setCode(string c) void
+        +ajouterLivre(Livre* livre) bool
+        +supprimerLivre(Livre* livre) bool
+        +chercherLivre(const string& c) Livre*
+        +chercherLivre_IBSN(const string& c) Livre*
+        +demanderLivre(...) bool
+        +preterLivre(...) bool
+        +rendreLivre(const string& c) bool
+        +acheterLivre(Livre* livre) bool
+    }
+
+    class Adherent {
+        -string nom
+        -string prenom
+        -string adresse
+        -int numAdherent
+        -Biblio* biblio
+        -Liste~Livre*~ livresEmpruntes
+        -int nbMaxEmprunt
+        -int nbAdherents$
+        +Adherent(...)
+        +Adherent(const Adherent& adherent)
+        +~Adherent()
+        +getNom() string
+        +getPrenom() string
+        +getAdresse() string
+        +getNumAdherent() int
+        +getBiblio() Biblio*
+        +getLivresEmpruntes() Liste~Livre*~
+        +getNbLivresEmpruntes() int
+        +getNbMaxEmprunt() int
+        +getNbAdherents()$ int
+        +setNom(string nm) void
+        +setPrenom(string pnm) void
+        +setAdresse(string adr) void
+        +setNumAdherent(int numAdh) void
+        +setBiblio(Biblio* bib) void
+        +setNbMaxEmprunt(int max) void
+        +afficher() void
+        +afficherLivresEmpruntes() void
+        +peutEmprunter() bool
+        +emprunterLivre(const string& codeLivre) bool
+        +rendreLivre(const string& codeLivre) bool
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% RELATIONS D'HÉRITAGE (flèche triangulaire pleine)
+    %% ═══════════════════════════════════════════════════════════
+    Livre <|-- BD
+    Livre <|-- Roman
+    Livre <|-- Theatre
+    Livre <|-- Recueil
+    Livre <|-- Album
+
+    %% ═══════════════════════════════════════════════════════════
+    %% RELATIONS DE COMPOSITION (losange plein)
+    %% ═══════════════════════════════════════════════════════════
+    Liste~T~ *-- Noeud~T~ : contient 0..*
+
+    %% ═══════════════════════════════════════════════════════════
+    %% RELATIONS D'AGRÉGATION (losange vide)
+    %% ═══════════════════════════════════════════════════════════
+    Biblio o-- Liste~Livre*~ : possède
+    Adherent o-- Liste~Livre*~ : emprunte
+
+    %% ═══════════════════════════════════════════════════════════
+    %% ASSOCIATIONS (flèche simple - pointeur)
+    %% ═══════════════════════════════════════════════════════════
+    Livre --> Biblio : proprietaire
+    Adherent --> Biblio : inscrit à
+
+    %% ═══════════════════════════════════════════════════════════
+    %% DÉPENDANCES VERS ÉNUMÉRATIONS (flèche pointillée)
+    %% ═══════════════════════════════════════════════════════════
+    Livre ..> Etat : utilise
+    Livre ..> Public : utilise
+    Roman ..> Genre : utilise

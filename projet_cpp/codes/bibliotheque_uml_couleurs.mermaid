@@ -1,0 +1,255 @@
+---
+title: Projet C++ - Diagramme UML
+---
+classDiagram
+    direction TB
+
+    %% ═══════════════════════════════════════════════════════════
+    %% ÉNUMÉRATIONS
+    %% ═══════════════════════════════════════════════════════════
+    class Etat {
+        <<enumeration>>
+        libre = 0
+        emprunte = 1
+        prete = 2
+    }
+
+    class Public {
+        <<enumeration>>
+        ados = 0
+        jeunesse = 1
+        tout_public = 2
+        adulte = 3
+    }
+
+    class Genre {
+        <<enumeration>>
+        defaut = -1
+        litterature = 0
+        noir = 1
+        animalier = 2
+        amour = 3
+        moeurs = 4
+        gothique = 5
+        courtois = 6
+        epistolaire = 7
+        feuilleton = 8
+        graphique = 9
+        historique = 10
+        photo = 11
+        picaresque = 12
+        memoire = 13
+        populaire = 14
+        aventure = 15
+        anticipation = 16
+        espionnage = 17
+        apprentissage = 18
+        chevalerie = 19
+        autobiographique = 20
+        nouveau_roman = 21
+        chevaleresque = 22
+        conte = 23
+        nouvelle = 24
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSES TEMPLATES
+    %% ═══════════════════════════════════════════════════════════
+    class NoeudT["Noeud&lt;T&gt;"] {
+        <<template>>
+        -T info
+        -Noeud* suivant
+        +Noeud()
+        +Noeud(T valeur)
+        +getInfo() T
+        +getSuivant() Noeud*
+        +setInfo(T inf) void
+        +setSuivant(Noeud* next) void
+    }
+
+    class ListeT["Liste&lt;T&gt;"] {
+        <<template>>
+        -Noeud* tete
+        -int taille
+        +Liste()
+        +Liste(const Liste& l)
+        +~Liste()
+        +getTete() Noeud*
+        +getTaille() int
+        +insererDebut(T valeur) void
+        +insererFin(T valeur) void
+        +supprimer(T valeur) bool
+        +vider() void
+        +rechercher(T val) Noeud*
+        +contient(T val) bool
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSE DE BASE LIVRE
+    %% ═══════════════════════════════════════════════════════════
+    class Livre {
+        -string code
+        -string auteur
+        -string titre
+        -string editeur
+        -string isbn
+        -Etat etat
+        -Public audience
+        -Biblio* proprietaire
+        +Livre(...)
+        +getCode() string
+        +getAuteur() string
+        +getTitre() string
+        +getEtat() Etat
+        +getPublic() Public
+        +getProprio() Biblio*
+        +afficher() void
+        +emprunter() bool
+        +rendre() bool
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSES DÉRIVÉES DE LIVRE
+    %% ═══════════════════════════════════════════════════════════
+    class BD {
+        -string dessinateur
+        +BD(...)
+        +afficher() void
+        +getDessinateur() string
+    }
+
+    class Roman {
+        -Genre genre
+        +Roman(...)
+        +getGenre() Genre
+        +afficher() void
+    }
+
+    class Theatre {
+        -int siecle
+        +Theatre(...)
+        +getSiecle() int
+        +afficher() void
+    }
+
+    class Recueil {
+        -bool vers
+        -bool prose
+        +Recueil(...)
+        +getVers() bool
+        +getProse() bool
+        +afficher() void
+    }
+
+    class Album {
+        -bool dessin
+        -bool photo
+        +Album(...)
+        +getDessin() bool
+        +getPhoto() bool
+        +afficher() void
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSES BIBLIO ET ADHERENT
+    %% ═══════════════════════════════════════════════════════════
+    class Biblio {
+        -string nom
+        -string adresse
+        -string code
+        -Liste livres
+        +Biblio(...)
+        +~Biblio()
+        +ajouterLivre(Livre* livre) bool
+        +supprimerLivre(Livre* livre) bool
+        +chercherLivre(const string& c) Livre*
+    }
+
+    class Adherent {
+        -string nom
+        -string prenom
+        -int numAdherent
+        -Biblio* biblio
+        -Liste livresEmpruntes
+        -int nbMaxEmprunt
+        -int nbAdherents$
+        +Adherent(...)
+        +~Adherent()
+        +peutEmprunter() bool
+        +emprunterLivre(const string& codeLivre) bool
+        +rendreLivre(const string& codeLivre) bool
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% CLASSE LÉGENDE
+    %% ═══════════════════════════════════════════════════════════
+    class LEGENDE {
+        🔵 BLEU____Heritage
+        🟢 VERT____Composition
+        🟠 ORANGE__Agregation
+        🟣 VIOLET__Association
+        🔴 ROUGE___Dependance_enum
+    }
+
+    %% ═══════════════════════════════════════════════════════════
+    %% RELATIONS D'HÉRITAGE - BLEU
+    %% ═══════════════════════════════════════════════════════════
+    Livre <|-- BD
+    Livre <|-- Roman
+    Livre <|-- Theatre
+    Livre <|-- Recueil
+    Livre <|-- Album
+
+    %% ═══════════════════════════════════════════════════════════
+    %% RELATIONS DE COMPOSITION - VERT
+    %% ═══════════════════════════════════════════════════════════
+    ListeT *-- NoeudT
+
+    %% ═══════════════════════════════════════════════════════════
+    %% RELATIONS D'AGRÉGATION - ORANGE
+    %% ═══════════════════════════════════════════════════════════
+    Biblio o-- ListeT
+    Adherent o-- ListeT
+
+    %% ═══════════════════════════════════════════════════════════
+    %% ASSOCIATIONS - VIOLET
+    %% ═══════════════════════════════════════════════════════════
+    Livre --> Biblio
+    Adherent --> Biblio
+
+    %% ═══════════════════════════════════════════════════════════
+    %% DÉPENDANCES VERS ÉNUMÉRATIONS - ROUGE
+    %% ═══════════════════════════════════════════════════════════
+    Livre ..> Etat
+    Livre ..> Public
+    Roman ..> Genre
+
+    %% ═══════════════════════════════════════════════════════════
+    %% STYLES DE COULEURS
+    %% ═══════════════════════════════════════════════════════════
+    
+    style Livre fill:#e1f5fe,stroke:#01579b
+    style BD fill:#e3f2fd,stroke:#1565c0
+    style Roman fill:#e3f2fd,stroke:#1565c0
+    style Theatre fill:#e3f2fd,stroke:#1565c0
+    style Recueil fill:#e3f2fd,stroke:#1565c0
+    style Album fill:#e3f2fd,stroke:#1565c0
+    
+    style Etat fill:#ffebee,stroke:#c62828
+    style Public fill:#ffebee,stroke:#c62828
+    style Genre fill:#ffebee,stroke:#c62828
+    
+    style NoeudT fill:#e8f5e9,stroke:#2e7d32
+    style ListeT fill:#e8f5e9,stroke:#2e7d32
+    
+    style Biblio fill:#fff3e0,stroke:#e65100
+    style Adherent fill:#fff3e0,stroke:#e65100
+    
+    style LEGENDE fill:#f5f5f5,stroke:#616161,stroke-width:2px
+
+    %% Couleurs des liens (par index)
+    linkStyle 0,1,2,3,4 stroke:#1976d2,stroke-width:2px
+    linkStyle 5 stroke:#388e3c,stroke-width:2px
+    linkStyle 6,7 stroke:#f57c00,stroke-width:2px
+    linkStyle 8,9 stroke:#7b1fa2,stroke-width:2px
+    linkStyle 10,11,12 stroke:#d32f2f,stroke-width:2px
